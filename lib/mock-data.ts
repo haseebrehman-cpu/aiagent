@@ -12,8 +12,8 @@ import {
 } from './types';
 
 export const mockWorkspaces: Workspace[] = [
-  { id: 'ws-1', name: 'RDX Storefront US', slug: 'RDX-us', plan: 'Enterprise', logoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&auto=format&fit=crop&q=80' },
-  { id: 'ws-2', name: 'RDX Global Retail', slug: 'RDX-global', plan: 'Pro', logoUrl: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=100&auto=format&fit=crop&q=80' },
+  { id: 'ws-1', name: 'RDX Storefront US', slug: 'rdx-us', plan: 'Enterprise', logoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&auto=format&fit=crop&q=80' },
+  { id: 'ws-2', name: 'RDX Global Retail', slug: 'rdx-global', plan: 'Pro', logoUrl: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=100&auto=format&fit=crop&q=80' },
   { id: 'ws-3', name: 'Dev Sandbox', slug: 'dev-sandbox', plan: 'Starter' },
 ];
 
@@ -26,8 +26,9 @@ export const mockIntegrations: Integration[] = [
     logo: 'ShoppingBag',
     status: 'Connected',
     lastSync: '2 minutes ago',
+    region: 'global',
     entities: { products: true, orders: true, customers: true, returns: true },
-    webhookUrl: 'https://api.RDX Assistant.io/v1/webhooks/shopify/wh_9023849182',
+    webhookUrl: 'https://api.aetherchat.io/v1/webhooks/shopify/wh_9023849182',
     webhookSecret: 'sh_sec_89f7a982f1b0a823c91e',
   },
   {
@@ -38,52 +39,96 @@ export const mockIntegrations: Integration[] = [
     logo: 'Box',
     status: 'Connected',
     lastSync: '15 minutes ago',
+    region: 'global',
     entities: { products: true, orders: true, customers: false, returns: true },
-    webhookUrl: 'https://api.RDX Assistant.io/v1/webhooks/amazon/wh_4918293810',
+    webhookUrl: 'https://api.aetherchat.io/v1/webhooks/amazon/wh_4918293810',
     webhookSecret: 'amz_sec_78192a01f9812e',
   },
   {
     id: 'int-3',
-    name: 'Walmart Marketplace',
-    type: 'walmart',
-    description: 'Automate customer support for Walmart marketplace orders and returns.',
-    logo: 'Store',
-    status: 'Not Connected',
-    entities: { products: true, orders: true, customers: false, returns: false },
-    webhookUrl: 'https://api.RDX Assistant.io/v1/webhooks/walmart/wh_pending',
-    webhookSecret: 'wm_sec_pending',
+    name: 'Linnworks Multichannel OMS',
+    type: 'linnworks',
+    description: 'Centralize inventory management, warehouse order dispatch, stock levels, and postal manifest sync.',
+    logo: 'Cpu',
+    status: 'Connected',
+    lastSync: '5 mins ago',
+    region: 'global',
+    entities: { products: true, orders: true, customers: true, returns: true },
+    webhookUrl: 'https://api.aetherchat.io/v1/webhooks/linnworks/wh_991823',
+    webhookSecret: 'lw_sec_9910283',
   },
   {
     id: 'int-4',
-    name: 'Custom Website Crawler',
-    type: 'website',
-    description: 'Recursively crawl website domain to extract FAQs, policies, and product documentation.',
-    logo: 'Globe',
-    status: 'Syncing',
-    lastSync: 'Syncing now (84% complete)...',
-    entities: { products: false, orders: false, customers: false, returns: false },
-    webhookUrl: 'https://api.RDX Assistant.io/v1/webhooks/crawler/wh_781920',
-    webhookSecret: 'web_sec_99182a',
+    name: 'eDesk E-Commerce Helpdesk',
+    type: 'edesk',
+    description: 'Unified customer support desk for eBay, Amazon, Shopify, and marketplace ticket resolution.',
+    logo: 'MessageSquare',
+    status: 'Connected',
+    lastSync: '10 mins ago',
+    region: 'global',
+    entities: { products: false, orders: true, customers: true, returns: true },
+    webhookUrl: 'https://api.aetherchat.io/v1/webhooks/edesk/wh_771829',
+    webhookSecret: 'ed_sec_881920',
   },
   {
     id: 'int-5',
-    name: 'Zendesk Desk Sync',
-    type: 'zendesk',
-    description: 'Seamlessly hand over unresolved tickets to human agents on Zendesk.',
+    name: 'LiveChat Customer Engagement',
+    type: 'livechat',
+    description: 'Real-time agent chat handoff, visitor monitoring, and omnichannel messaging support.',
     logo: 'Headphones',
-    status: 'Not Connected',
+    status: 'Connected',
+    lastSync: 'Just now',
+    region: 'global',
     entities: { products: false, orders: false, customers: true, returns: false },
-    webhookUrl: 'https://api.RDX Assistant.io/v1/webhooks/zendesk/wh_disabled',
-    webhookSecret: 'zen_sec_disabled',
+    webhookUrl: 'https://api.aetherchat.io/v1/webhooks/livechat/wh_441920',
+    webhookSecret: 'lc_sec_771029',
+  },
+  {
+    id: 'int-6',
+    name: 'CTS Logistics & Transport API',
+    type: 'cts',
+    description: 'Custom Transport System API for freight tracking, settlement manifests, and courier dispatch.',
+    logo: 'Truck',
+    status: 'Connected',
+    lastSync: '12 mins ago',
+    region: 'uk',
+    entities: { products: false, orders: true, customers: false, returns: true },
+    webhookUrl: 'https://api.aetherchat.io/v1/webhooks/cts/wh_331920',
+    webhookSecret: 'cts_sec_110293',
+  },
+  {
+    id: 'int-7',
+    name: 'Ship24 Universal Tracking API',
+    type: 'ship24',
+    description: 'Global multi-carrier tracking engine supporting 1,200+ postal & express couriers worldwide.',
+    logo: 'Truck',
+    status: 'Connected',
+    lastSync: 'Just now',
+    region: 'global',
+    entities: { products: false, orders: true, customers: false, returns: true },
+    webhookUrl: 'https://api.aetherchat.io/v1/webhooks/ship24/wh_881920',
+    webhookSecret: 's24_sec_901238',
+  },
+  {
+    id: 'int-8',
+    name: 'Yodel Delivery UK',
+    type: 'yodel',
+    description: 'Direct integration for Yodel UK parcel tracking, door-stop delivery updates, and driver ETA.',
+    logo: 'Navigation',
+    status: 'Connected',
+    lastSync: '1 hour ago',
+    region: 'uk',
+    entities: { products: false, orders: true, customers: false, returns: true },
+    webhookUrl: 'https://api.aetherchat.io/v1/webhooks/yodel/wh_771239',
+    webhookSecret: 'yod_sec_339182',
   },
 ];
 
 export const mockKnowledgeSources: KnowledgeSource[] = [
   { id: 'ks-1', name: 'Shopify Product Catalog (1,420 Items)', type: 'Catalog', vectorCount: 14200, status: 'Ready', enabled: true, lastUpdated: '10 mins ago' },
   { id: 'ks-2', name: 'Returns & Refund Policy 2026.pdf', type: 'Document', vectorCount: 850, status: 'Ready', enabled: true, lastUpdated: 'Yesterday', fileSize: '2.4 MB' },
-  { id: 'ks-3', name: 'https://RDXstore.com/help-center/*', type: 'Website', vectorCount: 3200, status: 'Processing', enabled: true, lastUpdated: 'Just now' },
+  { id: 'ks-3', name: 'https://rdxstore.com/help-center/*', type: 'Website', vectorCount: 3200, status: 'Processing', enabled: true, lastUpdated: 'Just now' },
   { id: 'ks-4', name: 'Shipping & International Delivery FAQs', type: 'FAQ', vectorCount: 420, status: 'Ready', enabled: false, lastUpdated: '3 days ago' },
-  { id: 'ks-5', name: 'Warranty Claim Guidelines.docx', type: 'Document', vectorCount: 0, status: 'Failed', enabled: false, lastUpdated: '5 days ago', fileSize: '1.1 MB' },
 ];
 
 export const mockPromptVersions: PromptVersion[] = [
@@ -100,23 +145,7 @@ Key Instructions:
 5. Adhere strictly to the {{refund_policy}} for return requests.`,
     active: true,
     createdAt: '2026-08-10 14:30',
-    author: 'RDX Lin'
-  },
-  {
-    id: 'pv-2',
-    version: 'v2.0',
-    content: `You are a helpful assistant for {{store_name}}. Help customers find products in {{product_catalog}} and check {{order_status}}.`,
-    active: false,
-    createdAt: '2026-08-01 09:15',
-    author: 'Alex Chen'
-  },
-  {
-    id: 'pv-1',
-    version: 'v1.0',
-    content: `Standard customer service prompt for general inquiries.`,
-    active: false,
-    createdAt: '2026-07-15 11:00',
-    author: 'RDX Lin'
+    author: 'RDX'
   }
 ];
 
@@ -130,14 +159,61 @@ export const mockAIModelConfig: AIModelConfig = {
 };
 
 export const mockFeatureToggles: FeatureToggle[] = [
-  { id: 'ft-1', title: 'Product Recommendation Engine', description: 'Analyze intent and recommend products directly in chat cards with buy buttons.', category: 'E-commerce', enabled: true, iconName: 'Sparkles' },
-  { id: 'ft-2', title: 'Real-time Order Tracking', description: 'Authenticate customers via email or order ID and fetch carrier tracking status.', category: 'E-commerce', enabled: true, iconName: 'PackageCheck' },
-  { id: 'ft-3', title: 'Automated Returns & Refunds', description: 'Generate pre-paid return shipping labels based on your store refund policy.', category: 'E-commerce', enabled: true, iconName: 'RotateCcw' },
-  { id: 'ft-4', title: 'Order Cancellation Flow', description: 'Allow customers to cancel unfulfilled orders within 1 hour of purchase.', category: 'E-commerce', enabled: false, iconName: 'XCircle' },
-  { id: 'ft-5', title: 'Human Agent Handoff', description: 'Automatically transfer chat to a live team member when sentiment drops.', category: 'Customer Support', enabled: true, iconName: 'UserCheck' },
-  { id: 'ft-6', title: 'Multi-Language Auto Translation', description: 'Detect customer language and translate responses in 40+ languages.', category: 'Customer Support', enabled: true, iconName: 'Languages' },
-  { id: 'ft-7', title: 'Proactive Greeting Trigger', description: 'Pop up welcome messages when visitors linger on checkout or product pages.', category: 'Automation', enabled: false, iconName: 'MessageSquarePlus' },
-  { id: 'ft-8', title: 'Damaged Product Claims', description: 'Collect photo uploads from users for damaged goods and open support claims.', category: 'Customer Support', enabled: true, iconName: 'AlertTriangle' },
+  {
+    id: 'ft-1',
+    title: 'Product Consultant Agent',
+    description: 'Master agent for product discovery, comparisons, specifications, and fit advice.',
+    category: 'E-commerce',
+    enabled: true,
+    iconName: 'Sparkles',
+    subAgents: [
+      { id: 'sa-1', name: 'Product Comparison Sub-Agent', description: 'Compares specs, prices, and features across multiple catalog items side-by-side.', enabled: true, role: 'Comparison Specialist' },
+      { id: 'sa-2', name: 'Product Information & Specs Sub-Agent', description: 'Answers technical specs, dimensions, compatibility, and user manual questions.', enabled: true, role: 'Specs Specialist' },
+      { id: 'sa-3', name: 'Personalized Fit & Sizing Sub-Agent', description: 'Recommends exact clothing/footwear sizes based on customer measurements.', enabled: true, role: 'Fit Advisor' },
+      { id: 'sa-4', name: 'Cross-Sell & Discount Sub-Agent', description: 'Suggests matching accessories and applies eligible store discount codes.', enabled: false, role: 'Upsell Advisor' }
+    ]
+  },
+  {
+    id: 'ft-2',
+    title: 'Real-time Order Tracking Agent',
+    description: 'Master agent for global order status lookup, multi-region carrier tracking, and courier updates.',
+    category: 'E-commerce',
+    enabled: true,
+    iconName: 'PackageCheck',
+    subAgents: [
+      { id: 'sa-5', name: 'Ship24 Multi-Carrier Engine', description: 'Universal tracking engine for 1,200+ international postal & express couriers.', enabled: true, role: 'Global Universal API', carrierProvider: 'ship24', region: 'global' },
+      { id: 'sa-6', name: 'Yodel UK Direct Courier Sub-Agent', description: 'UK regional parcel tracking, driver ETA, and doorstep delivery confirmation.', enabled: true, role: 'UK Regional Courier', carrierProvider: 'yodel', region: 'uk' },
+      { id: 'sa-7', name: 'CTS Transport & Settlement Sub-Agent', description: 'Custom Transport System freight tracking and settlement manifest updates.', enabled: true, role: 'CTS Transport Specialist', carrierProvider: 'cts', region: 'uk' },
+      { id: 'sa-8', name: 'FedEx & UPS North America Sub-Agent', description: 'US & North America express ground & air shipment status updates.', enabled: true, role: 'US Carrier Specialist', carrierProvider: 'fedex', region: 'us' },
+      { id: 'sa-9', name: 'DHL Express Customs & Transit Sub-Agent', description: 'Cross-border international customs events and clearance status updates.', enabled: true, role: 'International Customs', carrierProvider: 'dhl', region: 'global' }
+    ]
+  },
+  {
+    id: 'ft-3',
+    title: 'Automated Returns & Refunds Agent',
+    description: 'Master agent handling return eligibility, prepaid label creation, and exchanges.',
+    category: 'E-commerce',
+    enabled: true,
+    iconName: 'RotateCcw',
+    subAgents: [
+      { id: 'sa-10', name: 'Return Eligibility Evaluator', description: 'Verifies 30-day return window, order status, and policy terms.', enabled: true, role: 'Policy Verifier' },
+      { id: 'sa-11', name: 'Prepaid Return Label Generator', description: 'Generates downloadable shipping return labels in chat.', enabled: true, role: 'Label Issuer' },
+      { id: 'sa-12', name: 'Store Credit Exchange Incentive', description: 'Offers 15% bonus store credit if customer chooses exchange over cash refund.', enabled: true, role: 'Incentive Specialist' }
+    ]
+  },
+  {
+    id: 'ft-4',
+    title: 'Customer Claims & Support Agent',
+    description: 'Master agent for damaged item photo analysis, warranty checks, and human escalation.',
+    category: 'Customer Support',
+    enabled: true,
+    iconName: 'AlertTriangle',
+    subAgents: [
+      { id: 'sa-13', name: 'Damaged Product Vision AI Sub-Agent', description: 'Analyzes uploaded photos of broken or damaged goods using Vision LLM.', enabled: true, role: 'Vision Inspector' },
+      { id: 'sa-14', name: 'Warranty & Serial Verifier', description: 'Validates manufacturer warranty coverage and registration dates.', enabled: true, role: 'Warranty Verifier' },
+      { id: 'sa-15', name: 'Human Agent Escalation Sub-Agent', description: 'Transfers chat thread to live agent when sentiment drops below threshold.', enabled: true, role: 'Escalation Router' }
+    ]
+  }
 ];
 
 export const mockWidgetCustomization: WidgetCustomization = {
@@ -148,8 +224,8 @@ export const mockWidgetCustomization: WidgetCustomization = {
   welcomeMessage: 'Hi there! 👋 How can I help you with your order or product questions today?',
   suggestedQuestions: [
     'Where is my order?',
-    'What is your return policy?',
-    'Can you recommend a wireless headset?'
+    'Track my Yodel UK package',
+    'What is your return policy?'
   ],
   position: 'bottom-right',
   showBranding: true,
@@ -164,12 +240,12 @@ export const mockConversations: Conversation[] = [
       name: 'Emma Watson',
       email: 'emma.w@gmail.com',
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
-      location: 'New York, US',
+      location: 'London, UK',
       totalOrders: 6,
       lifetimeValue: 840,
       csatRating: 5
     },
-    lastMessage: 'Thank you so much! Order tracking updated.',
+    lastMessage: 'Thank you! Yodel parcel tracking updated.',
     timestamp: '10:42 AM',
     status: 'resolved',
     sentiment: 'positive',
@@ -177,73 +253,19 @@ export const mockConversations: Conversation[] = [
     unread: false,
     assignedAgent: 'AI Assistant',
     messages: [
-      { id: 'm1', sender: 'user', text: 'Hi! Can you tell me when my order #SH-9042 will arrive?', timestamp: '10:38 AM' },
-      { id: 'm2', sender: 'bot', text: 'I would be happy to help! Let me look up order #SH-9042 for you.', timestamp: '10:38 AM' },
-      { id: 'm3', sender: 'system', text: 'Fetched Shopify Order #SH-9042 (Status: Out for Delivery with FedEx)', timestamp: '10:39 AM' },
-      { id: 'm4', sender: 'bot', text: 'Great news! Your order #SH-9042 is out for delivery today via FedEx. The estimated arrival is by 4:00 PM EST. Tracking number: 94001112023.', timestamp: '10:39 AM' },
-      { id: 'm5', sender: 'user', text: 'Thank you so much! Order tracking updated.', timestamp: '10:42 AM' }
-    ]
-  },
-  {
-    id: 'conv-102',
-    customer: {
-      id: 'cust-2',
-      name: 'Marcus Vance',
-      email: 'marcus.v@techcorp.io',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
-      location: 'London, UK',
-      totalOrders: 2,
-      lifetimeValue: 310,
-    },
-    lastMessage: 'I need to speak to a human immediately regarding refund!',
-    timestamp: '11:15 AM',
-    status: 'handed_over',
-    sentiment: 'negative',
-    channel: 'shopify',
-    unread: true,
-    assignedAgent: 'RDX Lin',
-    messages: [
-      { id: 'm10', sender: 'user', text: 'My item arrived broken! Box was destroyed.', timestamp: '11:10 AM' },
-      { id: 'm11', sender: 'bot', text: 'I am so sorry to hear that! You can submit a damaged item claim with a photo here.', timestamp: '11:11 AM' },
-      { id: 'm12', sender: 'user', text: 'I need to speak to a human immediately regarding refund!', timestamp: '11:15 AM' },
-      { id: 'm13', sender: 'system', text: 'Negative Sentiment Triggered -> Human Handoff Initiated (Assigned to RDX Lin)', timestamp: '11:15 AM' }
-    ]
-  },
-  {
-    id: 'conv-103',
-    customer: {
-      id: 'cust-3',
-      name: 'Sophia Patel',
-      email: 'sophia.p@designhub.co',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
-      location: 'San Francisco, CA',
-      totalOrders: 14,
-      lifetimeValue: 2450,
-      csatRating: 5
-    },
-    lastMessage: 'Which wireless noise cancelling headphones do you recommend under $250?',
-    timestamp: '11:20 AM',
-    status: 'active',
-    sentiment: 'neutral',
-    channel: 'website',
-    unread: true,
-    messages: [
-      { id: 'm20', sender: 'user', text: 'Which wireless noise cancelling headphones do you recommend under $250?', timestamp: '11:20 AM' },
-      { id: 'm21', sender: 'bot', text: 'Based on your preferences, here are our top two wireless noise-cancelling models under $250:\n\n1. **RDX SoundPro ANC** - $199.99 (40h battery, active noise cancellation)\n2. **RDX Air Lite** - $149.99 (Ultra lightweight, 30h battery)\n\nWould you like me to send a 15% discount code for the SoundPro?', timestamp: '11:21 AM' }
+      { id: 'm1', sender: 'user', text: 'Can you check my UK Yodel delivery status for order #YD-8812?', timestamp: '10:38 AM' },
+      { id: 'm2', sender: 'bot', text: 'I am checking with Yodel UK direct courier integration...', timestamp: '10:38 AM' },
+      { id: 'm3', sender: 'system', text: 'Fetched Yodel UK API (Parcel #YD-8812: Out for delivery by driver Dave)', timestamp: '10:39 AM' },
+      { id: 'm4', sender: 'bot', text: 'Your Yodel UK parcel #YD-8812 is currently with courier Dave for delivery today between 1:30 PM and 3:30 PM GMT.', timestamp: '10:39 AM' },
+      { id: 'm5', sender: 'user', text: 'Thank you! Yodel parcel tracking updated.', timestamp: '10:42 AM' }
     ]
   }
 ];
 
 export const mockTeamMembers: TeamMember[] = [
-  { id: 'tm-1', name: 'RDX Lin', email: 'RDX.lin@RDX Assistant.io', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', role: 'Owner', status: 'Active', lastActive: 'Now' },
-  { id: 'tm-2', name: 'Alex Chen', email: 'alex.chen@RDX Assistant.io', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80', role: 'Admin', status: 'Active', lastActive: '12 mins ago' },
-  { id: 'tm-3', name: 'Jessica Miller', email: 'jessica.m@RDX Assistant.io', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', role: 'Agent', status: 'Active', lastActive: '1 hour ago' },
-  { id: 'tm-4', name: 'David Kim', email: 'david.k@partner.com', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80', role: 'Editor', status: 'Invited', lastActive: 'Never' },
+  { id: 'tm-1', name: 'RDX', email: 'rdx@aetherchat.io', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', role: 'Owner', status: 'Active', lastActive: 'Now' }
 ];
 
 export const mockInvoices: Invoice[] = [
-  { id: 'INV-2026-008', date: 'Aug 1, 2026', amount: 299.00, status: 'Paid', pdfUrl: '#' },
-  { id: 'INV-2026-007', date: 'Jul 1, 2026', amount: 299.00, status: 'Paid', pdfUrl: '#' },
-  { id: 'INV-2026-006', date: 'Jun 1, 2026', amount: 299.00, status: 'Paid', pdfUrl: '#' },
-  { id: 'INV-2026-005', date: 'May 1, 2026', amount: 199.00, status: 'Paid', pdfUrl: '#' },
+  { id: 'INV-2026-008', date: 'Aug 1, 2026', amount: 299.00, status: 'Paid', pdfUrl: '#' }
 ];

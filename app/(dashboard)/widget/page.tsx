@@ -15,14 +15,21 @@ import {
   CheckCircle2,
   RefreshCw,
   Sliders,
-  ExternalLink
+  ExternalLink,
+  ShoppingBag,
+  Box,
+  Store,
+  Globe,
+  Layers,
+  ChevronRight
 } from 'lucide-react';
-import { mockWidgetCustomization } from '@/lib/mock-data';
-import { WidgetCustomization, Message } from '@/lib/types';
+import { mockWidgetCustomization, mockIntegrations } from '@/lib/mock-data';
+import { WidgetCustomization, Message, Integration } from '@/lib/types';
 
 export default function WidgetPage() {
   const [activeTab, setActiveTab] = React.useState<'customize' | 'embed'>('customize');
   const [widget, setWidget] = React.useState<WidgetCustomization>(mockWidgetCustomization);
+  const [selectedConnector, setSelectedConnector] = React.useState<Integration>(mockIntegrations[0]);
   const [newQuestion, setNewQuestion] = React.useState('');
   const [chatMessages, setChatMessages] = React.useState<Message[]>([
     { id: '1', sender: 'bot', text: widget.welcomeMessage, timestamp: '10:00 AM' }
@@ -51,8 +58,8 @@ export default function WidgetPage() {
       let replyText = `Thanks for your inquiry about "${text}". I have checked our live inventory and store policies. How else can I assist you today?`;
       if (text.toLowerCase().includes('order') || text.toLowerCase().includes('where')) {
         replyText = `Your order #SH-9042 is out for delivery with FedEx today! Tracking ID: 94001112023.`;
-      } else if (text.toLowerCase().includes('return')) {
-        replyText = `You can return any item within 30 days of delivery. Prepaid shipping labels are provided free of charge.`;
+      } else if (text.toLowerCase().includes('compare') || text.toLowerCase().includes('headphones')) {
+        replyText = `Comparing models:\n• **RDX SoundPro ANC**: $199.99 (40h battery, active noise cancellation)\n• **RDX Air Lite**: $149.99 (30h battery, lightweight)\nBoth include 1-year warranty!`;
       }
       const botMsg: Message = { id: `b-${Date.now()}`, sender: 'bot', text: replyText, timestamp: 'Just now' };
       setChatMessages(prev => [...prev, botMsg]);
@@ -75,19 +82,65 @@ export default function WidgetPage() {
     }));
   };
 
-  const embedScript = `<!-- RDX Assistant Widget Snippet -->
+  // Generate Connector-specific script snippet
+  const getConnectorSnippet = (connector: Integration) => {
+    if (connector.type === 'shopify') {
+      return `<!-- Shopify Theme Liquid (layout/theme.liquid) -->
+{% comment %} RDXBot Shopify Chatbot Widget {% endcomment %}
 <script
-  src="https://cdn.RDX Assistant.io/widget.js"
-  data-RDX-key="ae_live_89f7a982f1b0a823"
+  src="https://cdn.aetherchat.io/shopify-widget.js"
+  data-shopify-shop="{{ shop.permanent_domain }}"
+  data-connector-id="${connector.id}"
   data-theme-color="${widget.primaryColor}"
   data-position="${widget.position}"
   async>
 </script>`;
+    } else if (connector.type === 'amazon') {
+      return `// Amazon Seller Central Integration Script (AWS Lambda Hook)
+const aether = require('@aetherchat/amazon-sdk');
+
+exports.handler = async (event) => {
+  return await aether.processAmazonOrderInquiry({
+    connectorId: "${connector.id}",
+    webhookSecret: "${connector.webhookSecret}",
+    event: event
+  });
+};`;
+    } else if (connector.type === 'website') {
+      return `<!-- Vanilla HTML / Custom Web App Embed -->
+<script
+  src="https://cdn.aetherchat.io/widget.js"
+  data-aether-key="${connector.webhookSecret}"
+  data-connector-id="${connector.id}"
+  data-theme-color="${widget.primaryColor}"
+  data-position="${widget.position}"
+  async>
+</script>`;
+    } else {
+      return `// React / Next.js Component Import
+import { AetherChatWidget } from '@aetherchat/react';
+
+export default function Layout({ children }) {
+  return (
+    <>
+      {children}
+      <AetherChatWidget
+        connectorId="${connector.id}"
+        themeColor="${widget.primaryColor}"
+        position="${widget.position}"
+      />
+    </>
+  );
+}`;
+    }
+  };
+
+  const currentSnippet = getConnectorSnippet(selectedConnector);
 
   const copyEmbedCode = () => {
-    navigator.clipboard.writeText(embedScript);
+    navigator.clipboard.writeText(currentSnippet);
     setCopied(true);
-    setToastMessage('Copied embed script to clipboard!');
+    setToastMessage(`Copied ${selectedConnector.name} embed script to clipboard!`);
     setTimeout(() => {
       setCopied(false);
       setToastMessage(null);
@@ -114,23 +167,25 @@ export default function WidgetPage() {
             <span className="text-xs text-slate-400">Live Preview & Customizer</span>
           </div>
           <h1 className="mt-1 text-2xl font-bold text-slate-100 tracking-tight">Channels & Chatbot Widget</h1>
-          <p className="text-sm text-slate-400">Customize your chatbot look and feel, colors, welcome prompts, and copy embed scripts.</p>
+          <p className="text-sm text-slate-400">Customize your chatbot look and feel, colors, welcome prompts, and copy connector-specific embed scripts.</p>
         </div>
 
         {/* Tab Switcher */}
         <div className="flex items-center gap-2 bg-slate-900 p-1 rounded-xl border border-slate-800 shrink-0">
           <button
             onClick={() => setActiveTab('customize')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${activeTab === 'customize' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
-              }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+              activeTab === 'customize' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
+            }`}
           >
             <Palette className="w-3.5 h-3.5" />
             <span>Customize Widget</span>
           </button>
           <button
             onClick={() => setActiveTab('embed')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${activeTab === 'embed' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
-              }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+              activeTab === 'embed' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
+            }`}
           >
             <Code className="w-3.5 h-3.5" />
             <span>Install & Embed</span>
@@ -295,10 +350,11 @@ export default function WidgetPage() {
                     className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[82%] p-3 rounded-2xl text-xs leading-relaxed ${msg.sender === 'user'
-                        ? 'bg-indigo-600 text-white rounded-br-none shadow-md'
-                        : 'bg-slate-800 text-slate-100 rounded-bl-none border border-slate-700'
-                        }`}
+                      className={`max-w-[82%] p-3 rounded-2xl text-xs leading-relaxed ${
+                        msg.sender === 'user'
+                          ? 'bg-indigo-600 text-white rounded-br-none shadow-md'
+                          : 'bg-slate-800 text-slate-100 rounded-bl-none border border-slate-700'
+                      }`}
                     >
                       {msg.text}
                     </div>
@@ -341,40 +397,88 @@ export default function WidgetPage() {
               {/* Widget Footer */}
               {widget.showBranding && (
                 <div className="py-1 bg-slate-950 text-center text-[10px] text-slate-500 border-t border-slate-900">
-                  Powered by <span className="font-semibold text-slate-400">RDX Assistant AI</span>
+                  Powered by <span className="font-semibold text-slate-400">AetherChat AI</span>
                 </div>
               )}
             </div>
           </div>
         </div>
       ) : (
-        /* Embed Code & Instructions Tab */
-        <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-6 max-w-3xl">
-          <div>
-            <h2 className="text-lg font-bold text-slate-100">Install Chatbot Widget</h2>
-            <p className="text-xs text-slate-400 mt-1">Copy and paste this lightweight snippet before the closing &lt;/body&gt; tag on your website.</p>
+        /* Connector-Specific Embed Code Tab */
+        <div className="space-y-6 max-w-4xl">
+          {/* Step 1: Select Integration Connector */}
+          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                <Layers className="w-4 h-4 text-indigo-400" />
+                <span>Step 1: Select Target Integration Connector</span>
+              </h2>
+              <span className="text-xs text-slate-400">Script generates based on connector choice</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {mockIntegrations.map(conn => {
+                const isSelected = selectedConnector.id === conn.id;
+
+                return (
+                  <div
+                    key={conn.id}
+                    onClick={() => setSelectedConnector(conn)}
+                    className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
+                      isSelected
+                        ? 'bg-indigo-950/40 border-indigo-500/60 ring-2 ring-indigo-500/20'
+                        : 'bg-slate-950/40 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-indigo-400">
+                        {conn.type === 'shopify' && <ShoppingBag className="w-4 h-4 text-emerald-400" />}
+                        {conn.type === 'amazon' && <Box className="w-4 h-4 text-amber-400" />}
+                        {conn.type === 'website' && <Globe className="w-4 h-4 text-indigo-400" />}
+                        {conn.type === 'walmart' && <Store className="w-4 h-4 text-blue-400" />}
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-200">{conn.name}</div>
+                        <div className="text-[10px] text-slate-400 capitalize">{conn.type}</div>
+                      </div>
+                    </div>
+
+                    {isSelected && <Check className="w-4 h-4 text-indigo-400" />}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="relative rounded-2xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-indigo-200">
-            <pre className="overflow-x-auto whitespace-pre-wrap">{embedScript}</pre>
-            <button
-              onClick={copyEmbedCode}
-              className="absolute top-4 right-4 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md"
-            >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Copied!' : 'Copy Code'}</span>
-            </button>
-          </div>
+          {/* Step 2: Custom Embed Code Generator */}
+          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                  <Code className="w-4 h-4 text-indigo-400" />
+                  <span>Step 2: Copy {selectedConnector.name} Installation Script</span>
+                </h2>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Target Connector ID: <code className="text-indigo-300 font-mono">{selectedConnector.id}</code> ({selectedConnector.status})
+                </p>
+              </div>
 
-          <div className="space-y-3 pt-4 border-t border-slate-800">
-            <h3 className="text-xs font-bold text-slate-200">Installation Guides</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {['Shopify Theme Liquid', 'Next.js App Router', 'HTML / WordPress'].map(platform => (
-                <div key={platform} className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-medium text-slate-300 flex items-center justify-between">
-                  <span>{platform}</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-indigo-400" />
-                </div>
-              ))}
+              <button
+                onClick={copyEmbedCode}
+                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md transition-all"
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copied ? 'Copied!' : 'Copy Code'}</span>
+              </button>
+            </div>
+
+            <div className="relative rounded-2xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-indigo-200">
+              <pre className="overflow-x-auto whitespace-pre-wrap">{currentSnippet}</pre>
+            </div>
+
+            <div className="p-3 rounded-xl bg-indigo-950/30 border border-indigo-500/20 text-xs text-indigo-200 flex items-center justify-between">
+              <span>Ready for deployment on {selectedConnector.name}</span>
+              <span className="font-semibold text-indigo-300">Live Auto-Sync Enabled</span>
             </div>
           </div>
         </div>

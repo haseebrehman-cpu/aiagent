@@ -134,7 +134,13 @@ export function Topbar({ onOpenCommandPalette }: TopbarProps) {
           className="p-2 rounded-lg border border-slate-800 bg-slate-900/60 hover:bg-slate-800/70 text-slate-400 hover:text-slate-200 transition-colors"
           title="Toggle Theme"
         >
-          {mounted && theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
+          {!mounted ? (
+            <Moon className="w-4 h-4 text-indigo-400" />
+          ) : theme === 'dark' ? (
+            <Sun className="w-4 h-4 text-amber-400" />
+          ) : (
+            <Moon className="w-4 h-4 text-indigo-400" />
+          )}
         </button>
 
         {/* Notifications Dropdown */}

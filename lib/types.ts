@@ -8,8 +8,37 @@ export interface Workspace {
   plan: 'Starter' | 'Pro' | 'Enterprise';
 }
 
-export type IntegrationType = 'shopify' | 'amazon' | 'walmart' | 'website' | 'custom_app' | 'zendesk';
+export type IntegrationType =
+  | 'shopify'
+  | 'amazon'
+  | 'walmart'
+  | 'linnworks'
+  | 'edesk'
+  | 'livechat'
+  | 'cts'
+  | 'ship24'
+  | 'yodel'
+  | 'dhl'
+  | 'royal_mail'
+  | 'website'
+  | 'custom_app'
+  | 'zendesk';
+
 export type IntegrationStatus = 'Connected' | 'Not Connected' | 'Syncing' | 'Error';
+
+export type CarrierProvider =
+  | 'ship24'
+  | 'yodel'
+  | 'fedex'
+  | 'dhl'
+  | 'ups'
+  | 'royal_mail'
+  | 'dpd'
+  | 'aftership'
+  | 'cts'
+  | 'custom_carrier';
+
+export type TrackingRegion = 'global' | 'us' | 'uk' | 'eu' | 'apac' | 'latam';
 
 export interface Integration {
   id: string;
@@ -19,6 +48,7 @@ export interface Integration {
   logo: string;
   status: IntegrationStatus;
   lastSync?: string;
+  region?: TrackingRegion;
   entities: {
     products: boolean;
     orders: boolean;
@@ -62,6 +92,28 @@ export interface AIModelConfig {
   topP: number;
 }
 
+export interface SubAgent {
+  id: string;
+  name: string;
+  description: string;
+  enabled: boolean;
+  role: string;
+  iconName?: string;
+  carrierProvider?: CarrierProvider;
+  region?: TrackingRegion;
+}
+
+export interface MainAgent {
+  id: string;
+  title: string;
+  description: string;
+  category: 'E-commerce' | 'Customer Support' | 'Automation';
+  enabled: boolean;
+  iconName: string;
+  subAgents: SubAgent[];
+  configSchema?: Record<string, any>;
+}
+
 export interface FeatureToggle {
   id: string;
   title: string;
@@ -69,6 +121,7 @@ export interface FeatureToggle {
   category: 'E-commerce' | 'Customer Support' | 'Automation';
   enabled: boolean;
   iconName: string;
+  subAgents?: SubAgent[];
   configSchema?: Record<string, any>;
 }
 
