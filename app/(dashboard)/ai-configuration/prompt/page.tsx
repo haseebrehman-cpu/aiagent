@@ -49,7 +49,7 @@ export default function SystemPromptPage() {
       content: promptText,
       active: false,
       createdAt: new Date().toISOString().replace('T', ' ').slice(0, 16),
-      author: 'Sarah Lin'
+      author: 'RDX'
     };
 
     setVersions([newVer, ...versions]);

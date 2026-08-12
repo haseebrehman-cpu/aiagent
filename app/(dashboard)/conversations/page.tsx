@@ -81,7 +81,7 @@ export default function ConversationsInboxPage() {
     setConversations(prev =>
       prev.map(c =>
         c.id === selectedConv.id
-          ? { ...c, status: 'handed_over', assignedAgent: 'Sarah Lin (Human Agent)' }
+          ? { ...c, status: 'handed_over', assignedAgent: 'RDX (Human Agent)' }
           : c
       )
     );

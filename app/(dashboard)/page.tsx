@@ -57,7 +57,7 @@ export default function OverviewPage() {
             <span className="text-xs text-slate-400">Synced 2 minutes ago</span>
           </div>
           <h1 className="mt-2 text-2xl font-bold text-slate-100 tracking-tight">
-            Welcome back, Sarah! 👋
+            Welcome back, RDX! 👋
           </h1>
           <p className="text-sm text-slate-400 max-w-xl">
             RDXBot has resolved <strong className="text-indigo-300">2,840 inquiries</strong> today with an automated deflection rate of 94.2%.

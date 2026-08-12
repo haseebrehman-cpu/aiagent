@@ -90,8 +90,8 @@ export function Topbar({ onOpenCommandPalette }: TopbarProps) {
                     setIsWorkspaceMenuOpen(false);
                   }}
                   className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs transition-colors ${ws.id === currentWorkspace.id
-                      ? 'bg-indigo-600/20 text-indigo-300 font-medium border border-indigo-500/30'
-                      : 'text-slate-300 hover:bg-slate-800/70 hover:text-slate-100'
+                    ? 'bg-indigo-600/20 text-indigo-300 font-medium border border-indigo-500/30'
+                    : 'text-slate-300 hover:bg-slate-800/70 hover:text-slate-100'
                     }`}
                 >
                   <div className="flex items-center gap-2">
@@ -194,8 +194,8 @@ export function Topbar({ onOpenCommandPalette }: TopbarProps) {
           {isUserMenuOpen && (
             <div className="absolute right-0 mt-2 w-56 rounded-xl bg-slate-900 border border-slate-800 shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100">
               <div className="px-3 py-2 border-b border-slate-800">
-                <div className="text-xs font-semibold text-slate-100">Sarah Lin</div>
-                <div className="text-[11px] text-slate-400">sarah.lin@RDX Assistant.io</div>
+                <div className="text-xs font-semibold text-slate-100">RDX Lin</div>
+                <div className="text-[11px] text-slate-400">RDX.lin@RDX Assistant.io</div>
               </div>
               <div className="py-1 space-y-0.5">
                 <button

@@ -100,7 +100,7 @@ Key Instructions:
 5. Adhere strictly to the {{refund_policy}} for return requests.`,
     active: true,
     createdAt: '2026-08-10 14:30',
-    author: 'Sarah Lin'
+    author: 'RDX Lin'
   },
   {
     id: 'pv-2',
@@ -116,7 +116,7 @@ Key Instructions:
     content: `Standard customer service prompt for general inquiries.`,
     active: false,
     createdAt: '2026-07-15 11:00',
-    author: 'Sarah Lin'
+    author: 'RDX Lin'
   }
 ];
 
@@ -201,12 +201,12 @@ export const mockConversations: Conversation[] = [
     sentiment: 'negative',
     channel: 'shopify',
     unread: true,
-    assignedAgent: 'Sarah Lin',
+    assignedAgent: 'RDX Lin',
     messages: [
       { id: 'm10', sender: 'user', text: 'My item arrived broken! Box was destroyed.', timestamp: '11:10 AM' },
       { id: 'm11', sender: 'bot', text: 'I am so sorry to hear that! You can submit a damaged item claim with a photo here.', timestamp: '11:11 AM' },
       { id: 'm12', sender: 'user', text: 'I need to speak to a human immediately regarding refund!', timestamp: '11:15 AM' },
-      { id: 'm13', sender: 'system', text: 'Negative Sentiment Triggered -> Human Handoff Initiated (Assigned to Sarah Lin)', timestamp: '11:15 AM' }
+      { id: 'm13', sender: 'system', text: 'Negative Sentiment Triggered -> Human Handoff Initiated (Assigned to RDX Lin)', timestamp: '11:15 AM' }
     ]
   },
   {
@@ -235,7 +235,7 @@ export const mockConversations: Conversation[] = [
 ];
 
 export const mockTeamMembers: TeamMember[] = [
-  { id: 'tm-1', name: 'Sarah Lin', email: 'sarah.lin@RDX Assistant.io', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', role: 'Owner', status: 'Active', lastActive: 'Now' },
+  { id: 'tm-1', name: 'RDX Lin', email: 'RDX.lin@RDX Assistant.io', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', role: 'Owner', status: 'Active', lastActive: 'Now' },
   { id: 'tm-2', name: 'Alex Chen', email: 'alex.chen@RDX Assistant.io', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80', role: 'Admin', status: 'Active', lastActive: '12 mins ago' },
   { id: 'tm-3', name: 'Jessica Miller', email: 'jessica.m@RDX Assistant.io', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', role: 'Agent', status: 'Active', lastActive: '1 hour ago' },
   { id: 'tm-4', name: 'David Kim', email: 'david.k@partner.com', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80', role: 'Editor', status: 'Invited', lastActive: 'Never' },
